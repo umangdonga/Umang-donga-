@@ -16,7 +16,10 @@ const projects = require('./data/projects');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MESSAGES_FILE = path.join(__dirname, 'data', 'messages.json');
+// Vercel's file system is read-only except /tmp
+const MESSAGES_FILE = process.env.VERCEL
+  ? path.join('/tmp', 'messages.json')
+  : path.join(__dirname, 'data', 'messages.json');
 
 // Email: messages from the contact form are sent to CONTACT_TO via Gmail SMTP
 const GMAIL_USER = process.env.GMAIL_USER;
@@ -32,14 +35,14 @@ const escapeHtml = (s) =>
 
 // No Gmail password set? Deliver through FormSubmit (free, no password needed).
 // The first message triggers a one-time "Activate Form" email to CONTACT_TO.
-async function sendViaFormSubmit({ name, email, message }) {
+async function sendViaFormSubmit({ name, email, message, origin }) {
   const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_TO)}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Origin: `http://localhost:${PORT}`,
-      Referer: `http://localhost:${PORT}/contact`,
+      Origin: origin,
+      Referer: `${origin}/contact`,
     },
     body: JSON.stringify({
       name,
@@ -56,8 +59,8 @@ async function sendViaFormSubmit({ name, email, message }) {
   if (String(body.success) !== 'true') throw new Error(body.message || `FormSubmit error ${res.status}`);
 }
 
-async function sendContactEmail({ name, email, message }) {
-  if (!mailer) return sendViaFormSubmit({ name, email, message });
+async function sendContactEmail({ name, email, message, origin }) {
+  if (!mailer) return sendViaFormSubmit({ name, email, message, origin });
   await mailer.sendMail({
     from: `"Portfolio Contact" <${GMAIL_USER}>`,
     to: CONTACT_TO,
@@ -75,6 +78,8 @@ async function sendContactEmail({ name, email, message }) {
   });
 }
 
+// Register EJS explicitly so bundlers (Vercel) include it
+app.engine('ejs', require('ejs').__express);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.disable('x-powered-by');
@@ -138,8 +143,11 @@ app.post('/api/contact', async (req, res) => {
     console.error('Failed to save message backup', err);
   }
 
+  const proto = req.headers['x-forwarded-proto'] || req.protocol;
+  const origin = `${proto}://${req.get('host')}`;
+
   try {
-    await sendContactEmail({ name, email, message });
+    await sendContactEmail({ name, email, message, origin });
     console.log(`Emailed message from ${name} <${email}> to ${CONTACT_TO}`);
     res.json({ ok: true });
   } catch (err) {
@@ -153,16 +161,22 @@ app.post('/api/contact', async (req, res) => {
 
 app.use((req, res) => res.status(404).render('404', { title: `Page not found — ${site.name}` }));
 
-app.listen(PORT, async () => {
-  console.log(`Portfolio running at http://localhost:${PORT}`);
-  if (!mailer) {
-    console.log(`Contact form email is ON (via FormSubmit): messages go to ${CONTACT_TO}`);
-    return;
-  }
-  try {
-    await mailer.verify();
-    console.log(`Contact form email is ON: messages go to ${CONTACT_TO}`);
-  } catch (err) {
-    console.error('Gmail login failed. Check GMAIL_APP_PASSWORD in .env:', err.message);
-  }
-});
+// On Vercel the app is exported and run as a serverless function;
+// locally (`npm start`) it starts its own server.
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(PORT, async () => {
+    console.log(`Portfolio running at http://localhost:${PORT}`);
+    if (!mailer) {
+      console.log(`Contact form email is ON (via FormSubmit): messages go to ${CONTACT_TO}`);
+      return;
+    }
+    try {
+      await mailer.verify();
+      console.log(`Contact form email is ON: messages go to ${CONTACT_TO}`);
+    } catch (err) {
+      console.error('Gmail login failed. Check GMAIL_APP_PASSWORD in .env:', err.message);
+    }
+  });
+}
