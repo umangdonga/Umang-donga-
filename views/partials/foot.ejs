@@ -1,0 +1,35 @@
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__card">
+        <div class="footer__top">
+          <div class="footer__brand">
+            <a href="/" class="footer__logo">
+              <img src="/images/portrait.png" alt="" width="22" height="22">
+              <span><%= site.shortName %></span>
+            </a>
+            <p><%= site.tagline %></p>
+          </div>
+          <div class="footer__col">
+            <h4>Pages</h4>
+            <% site.pages.forEach(function (p) { %>
+              <a href="<%= p.url %>"><%= p.label %></a>
+            <% }) %>
+          </div>
+          <div class="footer__col">
+            <h4>Social</h4>
+            <% site.social.forEach(function (s) { %>
+              <a href="<%= s.url %>" target="_blank" rel="noopener"><%= s.label %></a>
+            <% }) %>
+          </div>
+        </div>
+        <div class="footer__bar">
+          <span>© <%= new Date().getFullYear() %> <%= site.name %></span>
+          <a href="mailto:<%= site.email %>"><%= site.email %></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="/js/main.js" defer></script>
+</body>
+</html>

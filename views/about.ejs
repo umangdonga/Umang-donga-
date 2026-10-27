@@ -1,0 +1,114 @@
+<%- include('partials/head') %>
+
+<section class="section about-hero">
+  <div class="container about-hero__grid">
+    <div class="reveal">
+      <span class="pill">About me</span>
+      <h1 class="display">Good design starts with understanding the problem.</h1>
+      <p class="lead">I’m a UI/UX designer focused on creating simple, intuitive, and meaningful digital experiences through user-centered thinking and thoughtful design.</p>
+    </div>
+    <div class="about-hero__photo reveal" style="--d: 100ms">
+      <img src="/images/portrait.png" alt="Umang Donga" width="1126" height="1397">
+    </div>
+  </div>
+</section>
+
+<section class="section approach">
+  <div class="container approach__grid">
+    <div class="reveal">
+      <span class="pill"><%- include('partials/icon', { name: 'gem', size: 14 }) %> My approach</span>
+      <h2 class="display">Design is more<br>than how it looks</h2>
+      <p class="lead">A clear and collaborative workflow that moves each project from first idea to polished final result.</p>
+      <ol class="timeline timeline--compact">
+        <% site.approach.forEach(function (step, i) { %>
+          <li class="timeline__item reveal" style="--d: <%= i * 80 %>ms">
+            <span class="timeline__icon"><%- include('partials/icon', { name: step.icon }) %></span>
+            <div>
+              <h3><%= step.title %></h3>
+              <p><%= step.text %></p>
+            </div>
+          </li>
+        <% }) %>
+      </ol>
+    </div>
+    <div class="approach__photo reveal" style="--d: 120ms">
+      <img src="/images/about-extra.png" alt="Coffee, notebook and laptop on a desk" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="section principles">
+  <div class="container">
+    <div class="section-head section-head--center reveal">
+      <span class="pill">Principles</span>
+      <h2 class="display">The values behind my work</h2>
+      <p class="lead">A few principles guide how I approach every design problem, from understanding users to creating the final experience.</p>
+    </div>
+    <div class="principles__grid">
+      <% site.principles.forEach(function (p, i) { %>
+        <article class="principle <%= i === 1 ? 'principle--dark' : '' %> reveal" style="--d: <%= i * 90 %>ms; --offset: <%= i * 22 %>px">
+          <header>
+            <span class="principle__icon"><%- include('partials/icon', { name: p.icon }) %></span>
+            <span class="principle__num"><%= String(i + 1).padStart(2, '0') %></span>
+          </header>
+          <h3><%= p.title %></h3>
+          <p><%= p.text %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section tools">
+  <div class="container tools__grid">
+    <div class="reveal">
+      <span class="pill">Tools</span>
+      <h2 class="display">The tools behind the work</h2>
+      <p class="lead">The tools I use to shape ideas, design systems, build websites, and prepare polished final work.</p>
+      <div class="tools__category">
+        <span>01</span>
+        <div>
+          <strong>Design</strong>
+          <p>Figma, Illustrator, Photoshop</p>
+        </div>
+      </div>
+    </div>
+    <ul class="tool-stack" aria-label="Tools">
+      <% site.tools.forEach(function (t, i) { %>
+        <li class="tool-card reveal" style="--i: <%= i %>; --d: <%= i * 90 %>ms">
+          <img src="<%= t.icon %>" alt="" width="26" height="26" loading="lazy">
+          <span><%= t.name %></span>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-panel reveal">
+      <div>
+        <span class="pill">Start a project</span>
+        <h2 class="display">Let’s create something thoughtful together</h2>
+        <p class="lead">Have a brand, website, or product idea in mind? Share a few details and let’s shape the next step.</p>
+      </div>
+      <a href="/contact" class="contact-card contact-card--link">
+        <div class="contact-card__smoke" aria-hidden="true"></div>
+        <span class="contact-card__arrow"><%- include('partials/icon', { name: 'arrow', size: 20 }) %></span>
+        <h3>Available for new projects</h3>
+        <ul>
+          <li>
+            <span class="contact-card__icon"><%- include('partials/icon', { name: 'mail' }) %></span>
+            <div><small>Email</small><span><%= site.email %></span></div>
+          </li>
+          <li>
+            <span class="contact-card__icon"><%- include('partials/icon', { name: 'pin' }) %></span>
+            <div><small>Location</small><span><%= site.location %></span></div>
+          </li>
+        </ul>
+      </a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,47 @@
+<section class="section contact" id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill">Contact</span>
+      <<%= typeof headingTag !== 'undefined' ? headingTag : 'h2' %> class="display">Let's talk about your next project</<%= typeof headingTag !== 'undefined' ? headingTag : 'h2' %>>
+      <p class="lead">Have a brand, website or product idea in mind? Share a few details and I'll get back to you soon.</p>
+    </div>
+
+    <div class="contact__grid">
+      <form class="contact-form reveal" action="/api/contact" method="post" novalidate data-contact-form>
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" placeholder="Umang donga" autocomplete="name" required>
+          <small class="field-error" data-error="name"></small>
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" placeholder="umangdonga98@gmail.com" autocomplete="email" required>
+          <small class="field-error" data-error="email"></small>
+        </label>
+        <label>
+          <span>Message</span>
+          <textarea name="message" rows="4" placeholder="Tell me about your project..." required></textarea>
+          <small class="field-error" data-error="message"></small>
+        </label>
+        <input type="text" name="feedback" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+        <button type="submit" class="btn btn--dark btn--block">Send message</button>
+        <p class="form-status" role="status" data-form-status></p>
+      </form>
+
+      <aside class="contact-card reveal" style="--d: 100ms">
+        <div class="contact-card__smoke" aria-hidden="true"></div>
+        <h3>Currently accepting new projects</h3>
+        <ul>
+          <li>
+            <span class="contact-card__icon"><%- include('icon', { name: 'mail' }) %></span>
+            <div><small>Email</small><a href="mailto:<%= site.email %>"><%= site.email %></a></div>
+          </li>
+          <li>
+            <span class="contact-card__icon"><%- include('icon', { name: 'pin' }) %></span>
+            <div><small>Location</small><span><%= site.location %></span></div>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>

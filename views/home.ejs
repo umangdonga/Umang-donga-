@@ -1,0 +1,95 @@
+<%- include('partials/head') %>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero__panel">
+      <div class="hero__copy">
+        <h1 class="display display--xl reveal">I design digital experiences that are simple, useful, and human.</h1>
+        <p class="lead reveal" style="--d: 80ms">I’m Umang, a UI/UX Designer focused on user research, problem solving, and creating intuitive digital experiences.</p>
+        <div class="hero__actions reveal" style="--d: 160ms">
+          <a href="/projects" class="btn btn--dark btn--shine">View projects</a>
+          <a href="<%= site.resume %>" class="btn btn--light" target="_blank" rel="noopener">My Resume</a>
+        </div>
+      </div>
+      <div class="hero__media">
+        <img src="/images/avatar.png" alt="Portrait of Umang Donga" class="hero__portrait" width="448" height="556" fetchpriority="high">
+        <div class="hero__glass reveal" style="--d: 240ms">
+          <small><span class="dot"></span>Currently available for opportunities</small>
+          <strong>UI/UX Designer</strong>
+          <p>Have a project or opportunity in mind? Let’s create something meaningful together.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="section process">
+  <div class="container process__grid">
+    <div class="process__intro reveal">
+      <span class="pill"><%- include('partials/icon', { name: 'gem', size: 14 }) %> Process</span>
+      <h2 class="display">How the process flows with clarity</h2>
+      <p class="lead">A clear and collaborative workflow that moves each project from first idea to polished final result.</p>
+    </div>
+    <ol class="timeline">
+      <% site.process.forEach(function (step, i) { %>
+        <li class="timeline__item reveal" style="--d: <%= i * 80 %>ms">
+          <span class="timeline__icon"><%- include('partials/icon', { name: step.icon }) %></span>
+          <div>
+            <h3><%= step.title %></h3>
+            <p><%= step.text %></p>
+          </div>
+        </li>
+      <% }) %>
+    </ol>
+  </div>
+</section>
+
+<!-- Creative services -->
+<section class="section services" aria-labelledby="services-title">
+  <div class="container">
+    <h2 id="services-title" class="sr-only">Creative services</h2>
+    <div class="services__grid">
+      <div class="services__list" role="tablist" aria-label="Design frameworks" data-services>
+        <% site.services.forEach(function (s, i) { %>
+          <button class="service <%= i === 0 ? 'is-active' : '' %>" role="tab" aria-selected="<%= i === 0 %>" data-service="<%= i %>">
+            <h3><%= s.title %></h3>
+            <p><%= s.text %></p>
+          </button>
+        <% }) %>
+      </div>
+      <div class="services__visual reveal" aria-hidden="true">
+        <% site.services.forEach(function (s, i) { %>
+          <div class="iso <%= i === 0 ? 'is-active' : '' %>" data-service-visual="<%= i %>">
+            <div class="iso__stack">
+              <% s.steps.slice().reverse().forEach(function (step, j) { %>
+                <div class="iso__layer" style="--i: <%= j %>">
+                  <span><%= step %></span>
+                  <i></i><i></i><i></i>
+                </div>
+              <% }) %>
+            </div>
+            <p class="iso__caption"><%= s.steps.join(' → ') %></p>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Selected work -->
+<section class="section work">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="pill">Selected work</span>
+      <h2 class="display">Projects with clarity</h2>
+      <p class="lead">A curated collection of brand, web, and product design work created for modern teams.</p>
+    </div>
+    <%- include('partials/project-grid') %>
+  </div>
+</section>
+
+<%- include('partials/contact-section') %>
+
+<%- include('partials/foot') %>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <meta name="description" content="<%= typeof description !== 'undefined' ? description : site.description %>">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= typeof description !== 'undefined' ? description : site.description %>">
+  <meta property="og:image" content="/images/portrait.png">
+  <link rel="icon" href="/images/avatar.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <% if (typeof project !== 'undefined') { %>
+  <style>
+    :root {
+      --cs-accent: <%= project.theme.accent %>;
+      --cs-accent-soft: <%= project.theme.accentSoft %>;
+      --cs-on-accent: <%= project.theme.onAccent %>;
+      --cs-highlight: <%= project.theme.highlight || project.theme.accent %>;
+      --cs-band: <%= project.theme.gradient || project.theme.accent %>;
+    }
+  </style>
+  <% } %>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="nav" data-nav>
+    <div class="container nav__inner">
+      <a href="/" class="nav__brand" aria-label="<%= site.name %> — home">
+        <img src="/images/avatar.png" alt="" width="22" height="27">
+        <span><%= site.name %></span>
+      </a>
+      <nav class="nav__links" aria-label="Primary">
+        <a href="/about" class="<%= currentPath === '/about' ? 'is-active' : '' %>">About Us</a>
+        <a href="/projects" class="<%= currentPath === '/projects' ? 'is-active' : '' %>">Projects</a>
+      </nav>
+      <a href="/contact" class="btn btn--dark btn--sm nav__cta">Let's talk <%- include('icon', { name: 'arrow', size: 15 }) %></a>
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+        <%- include('icon', { name: 'menu', size: 22 }) %>
+      </button>
+    </div>
+    <div class="nav__mobile" data-nav-menu>
+      <a href="/">Home</a>
+      <a href="/about">About Us</a>
+      <a href="/projects">Projects</a>
+      <a href="/contact" class="btn btn--dark">Let's talk <%- include('icon', { name: 'arrow', size: 15 }) %></a>
+    </div>
+  </header>
+  <main id="main">

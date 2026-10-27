@@ -1,0 +1,253 @@
+<%- include('partials/head') %>
+<%
+  const laws = project.sections.filter(function (s) { return s.type === 'law'; });
+  let lawIndex = 0;
+  const icon = function (name, size) { return include('partials/icon', { name: name, size: size }); };
+%>
+
+<article class="cs" data-slug="<%= project.slug %>">
+
+  <!-- Hero -->
+  <header class="cs-hero">
+    <div class="container cs-hero__grid cs-hero__grid--<%= project.hero.imageStyle %>">
+      <div class="cs-hero__copy reveal">
+        <a href="/projects" class="cs-back"><%- icon('arrowLeft', 16) %> All projects</a>
+        <span class="pill"><%= project.category %></span>
+        <h1 class="display display--xl"><%= project.hero.title %></h1>
+        <p class="cs-hero__subtitle"><%= project.hero.subtitle %></p>
+        <p class="lead"><%= project.summary %></p>
+      </div>
+      <div class="cs-hero__media reveal" style="--d: 120ms">
+        <img src="<%= project.hero.image %>" alt="<%= project.name %> — hero visual" fetchpriority="high">
+      </div>
+    </div>
+  </header>
+
+  <!-- Overview + meta -->
+  <section class="cs-section">
+    <div class="container cs-overview">
+      <div class="reveal">
+        <h2 class="cs-h2">Overview</h2>
+        <% project.overview.forEach(function (p, i) { %>
+          <p class="<%= i === 0 ? 'cs-lede' : 'cs-muted' %>"><%= p %></p>
+        <% }) %>
+      </div>
+      <dl class="cs-meta reveal" style="--d: 100ms">
+        <% project.meta.forEach(function (m) { %>
+          <div>
+            <span class="cs-meta__icon"><%- icon(m.icon, 20) %></span>
+            <dt><%= m.label %></dt>
+            <dd><%= m.value %></dd>
+          </div>
+        <% }) %>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Sections -->
+  <% project.sections.forEach(function (s) { %>
+
+    <% if (s.type === 'text') { %>
+      <section class="cs-section">
+        <div class="container cs-text reveal">
+          <h2 class="cs-h2"><% if (s.number) { %><span class="cs-num"><%= s.number %></span><% } %><%= s.heading %></h2>
+          <% (s.paragraphs || []).forEach(function (p) { %><p><%= p %></p><% }) %>
+          <% if (s.bullets) { %>
+            <% if (s.bulletsTitle) { %><h3 class="cs-h3"><%= s.bulletsTitle %></h3><% } %>
+            <ul class="cs-list">
+              <% s.bullets.forEach(function (b) { %><li><%= b %></li><% }) %>
+            </ul>
+          <% } %>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'insights') { %>
+      <section class="cs-section cs-section--tight">
+        <div class="container">
+          <div class="cs-insights">
+            <% s.items.forEach(function (item, i) { %>
+              <div class="cs-insight reveal" style="--d: <%= i * 90 %>ms">
+                <small>Key insight <%= i + 1 %></small>
+                <p><%= item %></p>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'figure') { %>
+      <section class="cs-section cs-section--tight">
+        <figure class="cs-figure cs-figure--<%= s.frame || 'plain' %> <%= s.frame === 'bleed' ? '' : 'container' %> reveal">
+          <div class="cs-figure__frame">
+            <img src="<%= s.src %>" alt="<%= s.alt %>" loading="lazy">
+          </div>
+          <% if (s.caption) { %><figcaption class="<%= s.frame === 'bleed' ? 'container' : '' %>"><%= s.caption %></figcaption><% } %>
+        </figure>
+      </section>
+
+    <% } else if (s.type === 'beforeAfter') { %>
+      <section class="cs-section cs-section--tight">
+        <div class="container cs-ba">
+          <% [s.before, s.after].forEach(function (side, i) { %>
+            <figure class="reveal" style="--d: <%= i * 100 %>ms">
+              <div class="cs-ba__frame"><img src="<%= side.src %>" alt="<%= side.label %> screen" loading="lazy"></div>
+              <figcaption><%= side.label %></figcaption>
+            </figure>
+          <% }) %>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'steps') { %>
+      <section class="cs-steps" aria-label="Design process">
+        <div class="container">
+          <ol>
+            <% s.items.forEach(function (step) { %>
+              <li><%- icon('sparkle', 16) %><%= step %></li>
+            <% }) %>
+          </ol>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'ideas') { %>
+      <section class="cs-section">
+        <div class="container cs-ideas">
+          <div class="reveal">
+            <h2 class="cs-h2"><% if (s.number) { %><span class="cs-num"><%= s.number %></span><% } %><%= s.heading %></h2>
+            <% if (s.intro) { %><p><%= s.intro %></p><% } %>
+            <ul class="cs-chips">
+              <% s.items.forEach(function (item) { %>
+                <li class="<%= item.chosen ? 'is-chosen' : '' %>">
+                  <% if (item.chosen) { %><%- icon('check', 14) %><% } %><%= item.label %>
+                  <% if (item.chosen) { %><em>Selected</em><% } %>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+          <% if (s.image) { %>
+            <figure class="cs-ideas__img reveal" style="--d: 100ms"><img src="<%= s.image.src %>" alt="<%= s.image.alt %>" loading="lazy"></figure>
+          <% } %>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'cards') { %>
+      <section class="cs-section">
+        <div class="container">
+          <% if (s.heading) { %><h2 class="cs-h2 reveal"><%= s.heading %></h2><% } %>
+          <div class="cs-cards cs-cards--<%= s.items.length %>">
+            <% s.items.forEach(function (c, i) { %>
+              <div class="cs-card reveal" style="--d: <%= i * 90 %>ms">
+                <% if (c.icon) { %><span class="cs-card__icon"><%- icon(c.icon, 20) %></span><% } %>
+                <h3><%= c.title %></h3>
+                <p><%= c.text %></p>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'identity') { %>
+      <section class="cs-section">
+        <div class="container">
+          <div class="cs-text reveal">
+            <h2 class="cs-h2"><% if (s.number) { %><span class="cs-num"><%= s.number %></span><% } %><%= s.heading %></h2>
+            <p><%= s.intro %></p>
+          </div>
+          <div class="cs-identity reveal">
+            <div class="cs-identity__type">
+              <small>Typeface</small>
+              <strong><%= s.typeface %></strong>
+              <span>Aa · ABCDEFGHIJKLMNOPQRSTUVWXYZ · 0123456789</span>
+            </div>
+            <% s.colors.forEach(function (c) { %>
+              <div class="cs-swatch" style="--c: <%= c %>"><span><%= c %></span></div>
+            <% }) %>
+          </div>
+          <% if (s.image) { %>
+            <figure class="cs-figure cs-figure--plain reveal"><div class="cs-figure__frame"><img src="<%= s.image.src %>" alt="<%= s.image.alt %>" loading="lazy"></div></figure>
+          <% } %>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'scorecard') { %>
+      <section class="cs-section">
+        <div class="container reveal">
+          <h2 class="cs-h2">At a glance</h2>
+          <p class="cs-muted">How each app applies the laws reviewed in this study. Select a law to jump to the detailed analysis.</p>
+          <div class="cs-table-wrap">
+            <table class="cs-table">
+              <thead>
+                <tr><th scope="col">Law of UX</th><% project.apps.forEach(function (a) { %><th scope="col"><%= a %></th><% }) %></tr>
+              </thead>
+              <tbody>
+                <% laws.forEach(function (l, i) { %>
+                  <tr>
+                    <th scope="row"><a href="#law-<%= i + 1 %>"><span><%= String(i + 1).padStart(2, '0') %></span><%= l.name %></a></th>
+                    <% project.apps.forEach(function (a) { %>
+                      <td><span class="verdict verdict--<%= l.verdicts[a] ? 'yes' : 'no' %>" title="<%= l.verdicts[a] ? 'Applied well' : 'Not applied well' %>"><%- icon(l.verdicts[a] ? 'check' : 'x', 14) %></span></td>
+                    <% }) %>
+                  </tr>
+                <% }) %>
+              </tbody>
+              <tfoot>
+                <tr><th scope="row">Score</th>
+                  <% project.apps.forEach(function (a) { %>
+                    <td><strong><%= laws.filter(function (l) { return l.verdicts[a]; }).length %></strong>/<%= laws.length %></td>
+                  <% }) %>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    <% } else if (s.type === 'law') { lawIndex++; %>
+      <section class="cs-section cs-law" id="law-<%= lawIndex %>">
+        <div class="container">
+          <div class="cs-law__head reveal">
+            <span class="cs-law__num"><%= String(lawIndex).padStart(2, '0') %></span>
+            <div>
+              <h2 class="cs-h2"><%= s.name %></h2>
+              <p class="cs-law__def"><%= s.definition %></p>
+              <p class="cs-law__rule"><%- icon('bulb', 16) %><%= s.rule %></p>
+            </div>
+          </div>
+          <ul class="cs-verdicts reveal">
+            <% project.apps.forEach(function (a) { %>
+              <li class="<%= s.verdicts[a] ? 'is-yes' : 'is-no' %>">
+                <span class="verdict verdict--<%= s.verdicts[a] ? 'yes' : 'no' %>"><%- icon(s.verdicts[a] ? 'check' : 'x', 14) %></span>
+                <%= a %> <small><%= s.verdicts[a] ? 'Applied' : 'Needs work' %></small>
+              </li>
+            <% }) %>
+          </ul>
+          <figure class="cs-figure cs-figure--accent reveal"><div class="cs-figure__frame"><img src="<%= s.image %>" alt="<%= s.name %>: Amazon, Meesho and Flipkart screens compared" loading="lazy"></div></figure>
+          <% if (s.extraImage) { %>
+            <figure class="cs-figure cs-figure--accent cs-figure--narrow reveal"><div class="cs-figure__frame"><img src="<%= s.extraImage.src %>" alt="<%= s.extraImage.caption %>" loading="lazy"></div><figcaption><%= s.extraImage.caption %></figcaption></figure>
+          <% } %>
+          <div class="cs-text cs-law__analysis reveal">
+            <h3 class="cs-h3">Analysis</h3>
+            <% s.analysis.forEach(function (p) { %><p><%= p %></p><% }) %>
+          </div>
+        </div>
+      </section>
+    <% } %>
+
+  <% }) %>
+
+  <!-- Footer of case study -->
+  <section class="cs-section">
+    <div class="container">
+      <div class="cs-end reveal">
+        <% if (project.behance) { %>
+          <a href="<%= project.behance %>" class="btn btn--dark" target="_blank" rel="noopener">View on Behance <%- icon('arrow', 15) %></a>
+        <% } %>
+        <a href="/<%= nextProject.slug %>" class="cs-next">
+          <small>Next project</small>
+          <span><%= nextProject.name %> <%- icon('arrowRight', 22) %></span>
+          <img src="<%= nextProject.thumb %>" alt="" loading="lazy">
+        </a>
+      </div>
+    </div>
+  </section>
+</article>
+
+<%- include('partials/foot') %>
