@@ -1,0 +1,29 @@
+<%
+  /*
+   * One caption under each phone of a multi-screen image, pointing up at it.
+   *   screens: { flow?, items: [{ x, n?, title, text, action? }] }
+   *   x is the phone's horizontal centre as a % of the image width; n overrides
+   *   the step number when the phones are not in left-to-right order.
+   */
+  var items = screens.items;
+  var cols = items.map(function (it, i) {
+    var room = [2 * it.x, 2 * (100 - it.x), 34];
+    if (i > 0) room.push(it.x - items[i - 1].x);
+    if (i < items.length - 1) room.push(items[i + 1].x - it.x);
+    return { w: +(Math.min.apply(null, room) - 2.5).toFixed(2), n: it.n || i + 1 };
+  });
+  var icon = function (name, size) { return include('icon', { name: name, size: size }); };
+%>
+<div class="cs-strip">
+  <% items.forEach(function (it, i) { %>
+    <div class="cs-strip__item" style="--x: <%= it.x %>%; --w: <%= cols[i].w %>%; order: <%= cols[i].n %>">
+      <span class="cs-strip__pointer" aria-hidden="true"></span>
+      <span class="cs-strip__head"><span class="cs-strip__num"><%= cols[i].n %></span><strong><%= it.title %></strong></span>
+      <p><%= it.text %></p>
+      <% if (it.action) { %><span class="cs-strip__action"><%- icon('tap', 13) %><%= it.action %></span><% } %>
+    </div>
+    <% if (screens.flow && i < items.length - 1) { %>
+      <span class="cs-strip__flow" style="--x: <%= (it.x + items[i + 1].x) / 2 %>%" aria-hidden="true"><%- icon('arrowRight', 18) %></span>
+    <% } %>
+  <% }) %>
+</div>

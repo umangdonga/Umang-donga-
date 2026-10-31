@@ -1,0 +1,44 @@
+<%
+  /*
+   * Screen with numbered pins and side callouts. Arrows from callout to pin are
+   * drawn by public/js/main.js; on small screens the callouts become a list.
+   *   fig:        { src, alt, size: [w, h], crop?, notes: [{ x, y, side?, title, text }] }
+   *   start:      number of the first note minus one
+   *   side:       default side for notes without one
+   *   frameClass: background treatment of the frame
+   *   tag:        optional { label, tone?: 'bad' | 'good' } chip in the frame corner
+   */
+  var notes = (fig.notes || []).map(function (n, i) {
+    return Object.assign({ num: start + i + 1, side: side }, n);
+  });
+  var left = notes.filter(function (n) { return n.side === 'left'; });
+  var right = notes.filter(function (n) { return n.side === 'right'; });
+  var layout = left.length && right.length ? 'both' : left.length ? 'left' : right.length ? 'right' : 'none';
+  var ratio = fig.size ? fig.size[0] + ' / ' + fig.size[1] : null;
+%>
+<% var list = function (items, where) { %>
+  <ol class="anno__notes anno__notes--<%= where %>">
+    <% items.forEach(function (n) { %>
+      <li class="anno__note" data-note="<%= n.num %>">
+        <span class="anno__num"><%= n.num %></span>
+        <span class="anno__body"><strong><%= n.title %></strong><%= n.text %></span>
+      </li>
+    <% }) %>
+  </ol>
+<% } %>
+<div class="anno anno--<%= layout %>" data-anno>
+  <% if (left.length) list(left, 'left'); %>
+  <div class="anno__frame <%= frameClass %>"<% if (fig.crop) { %> style="aspect-ratio: <%= fig.crop %>"<% } %>>
+    <div class="anno__canvas<%= fig.crop ? ' anno__canvas--crop' : '' %>"<% if (ratio) { %> style="aspect-ratio: <%= ratio %>"<% } %>>
+      <img src="<%= fig.src %>" alt="<%= fig.alt %>" loading="lazy"<% if (fig.size) { %> width="<%= fig.size[0] %>" height="<%= fig.size[1] %>"<% } %>>
+      <% notes.forEach(function (n) { %>
+        <span class="anno__pin" data-pin="<%= n.num %>" style="left: <%= n.x %>%; top: <%= n.y %>%" aria-hidden="true"><%= n.num %></span>
+      <% }) %>
+    </div>
+    <% if (typeof tag !== 'undefined' && tag) { %>
+      <span class="anno__tag<%= tag.tone ? ' anno__tag--' + tag.tone : '' %>"><%= tag.label %></span>
+    <% } %>
+  </div>
+  <% if (right.length) list(right, 'right'); %>
+  <% if (notes.length) { %><svg class="anno__lines" aria-hidden="true"></svg><% } %>
+</div>

@@ -4,8 +4,14 @@
  * Section types:
  *   text        { heading, number?, paragraphs?, bullets? }
  *   insights    { items: string[] }
- *   figure      { src, alt, caption?, frame?: 'accent' | 'plain' | 'bleed' }
- *   beforeAfter { before: {src,label}, after: {src,label} }
+ *   figure      { src, alt, caption?, frame?: 'accent' | 'plain' | 'bleed', notes?, screens? }
+ *                 notes:   [{ x, y, side?, title, text }] – numbered pins with side callouts;
+ *                          needs size: [w, h], optional crop (frame aspect ratio) to zoom in
+ *                 screens: { flow?, pinY?, items: [{ x, n?, y?, title, text, action? }] }
+ *                          – one caption per phone; x/y are % of the image
+ *   beforeAfter { heading?, intro?, connector?, paired?, before, after }
+ *                 before/after: { src, alt, label, tone?: 'bad' | 'good', size, crop?, notes? }
+ *                 paired: same numbers on both sides mark the same area
  *   steps       { items: string[] }                    – process strip
  *   ideas       { heading, intro?, items: [{label, chosen?}], image? }
  *   cards       { heading?, items: [{title, text, icon?}] }
@@ -46,8 +52,36 @@ module.exports = [
     sections: [
       {
         type: 'beforeAfter',
-        before: { src: img('campus-before'), label: 'Before' },
-        after: { src: img('campus-after'), label: 'After' },
+        heading: 'Home screen: before → after',
+        intro: 'Matching numbers mark the same area on both screens.',
+        connector: 'Redesign',
+        paired: true,
+        before: {
+          src: img('campus-before'),
+          alt: 'Earlier Campus Connect home screen with soft grey cards and the campus map at the bottom',
+          label: 'Before',
+          tone: 'bad',
+          size: [1361, 1058],
+          crop: 0.62,
+          notes: [
+            { x: 50, y: 26.5, title: 'Flat header', text: 'Grey search bar blends into the page.' },
+            { x: 50, y: 41.5, title: 'Low-contrast cards', text: 'Soft grey tiles look disabled, not tappable.' },
+            { x: 50, y: 75, title: 'Map buried', text: 'The core feature sits last, cut off by the nav.' },
+          ],
+        },
+        after: {
+          src: img('campus-after'),
+          alt: 'Redesigned Campus Connect home screen with a campus photo header, map card first and solid blue action tiles',
+          label: 'After',
+          tone: 'good',
+          size: [1361, 1058],
+          crop: 0.62,
+          notes: [
+            { x: 50, y: 28.3, title: 'Photo header', text: 'Campus photo sets context; white search stands out.' },
+            { x: 50, y: 64, title: 'Solid action tiles', text: 'High-contrast tiles read clearly as buttons.' },
+            { x: 46, y: 41, title: 'Map comes first', text: 'Moved to the top with a clear View Full Map action.' },
+          ],
+        },
       },
       { type: 'steps', items: ['Research', 'Information Architecture', 'User Flow', 'Wireframing', 'UI Design & Prototype'] },
       {
@@ -91,8 +125,15 @@ module.exports = [
         type: 'figure',
         src: img('campus-design'),
         alt: 'Campus Connect navigation screens: turn-by-turn outdoor directions, classroom search and room details',
-        caption: 'Outdoor turn-by-turn directions, classroom search and room-level navigation.',
         frame: 'accent',
+        screens: {
+          pinY: 4,
+          items: [
+            { x: 23.75, n: 3, title: 'Turn-by-turn', text: 'Live view with the next turn, distance and time left.', action: 'Follow the arrow' },
+            { x: 50, n: 1, y: 22, title: 'Find your class', text: 'Enter block and room; no campus knowledge needed.', action: 'Start Navigation' },
+            { x: 76.25, n: 2, title: 'Route overview', text: 'Time, distance and tips like "take the lift" before leaving.', action: 'Start Turn-by-Turn' },
+          ],
+        },
       },
       {
         type: 'text',
@@ -112,8 +153,18 @@ module.exports = [
         type: 'figure',
         src: img('campus-screens'),
         alt: 'Campus Connect screens: campus search, notifications, campus services, latest news, campus canteens and events',
-        caption: 'Supporting screens: search, notifications, services, news, canteens and events.',
         frame: 'bleed',
+        screens: {
+          pinY: 5,
+          items: [
+            { x: 10, title: 'Campus search', text: 'Quick filters and recent searches.', action: 'Tap a filter' },
+            { x: 25.9, title: 'Notifications', text: 'Grades, library dues and club events in one feed.' },
+            { x: 41.9, title: 'Campus services', text: 'Bus, hostel, canteen, parking as big tiles.', action: 'Tap a tile' },
+            { x: 57.8, title: 'Latest news', text: 'Campus updates grouped by Today and Yesterday.' },
+            { x: 73.75, title: 'Canteens', text: 'Photos, ratings and timings to pick a place.' },
+            { x: 90, title: 'Events', text: 'Seats left and one-tap sign-up.', action: 'Register' },
+          ],
+        },
       },
     ],
   },
@@ -124,6 +175,7 @@ module.exports = [
     name: 'BookMyShow – Kid Version',
     cardTitle: 'Bookmyshow Kid Version',
     thumb: '/images/thumb-book.png',
+    thumbPosition: 'right center',
     category: 'Mobile App · UX Case Study',
     summary:
       'A kid-friendly movie and event booking experience designed to make discovery and booking simpler, safer, and more engaging for children.',
@@ -147,8 +199,33 @@ module.exports = [
     sections: [
       {
         type: 'beforeAfter',
-        before: { src: img('book-before'), label: 'Parent control setup' },
-        after: { src: img('book-after'), label: 'Kid-friendly home' },
+        heading: 'Parent sets the rules, kid explores',
+        intro: 'A parent configures the app once; the child then gets a simpler, playful home.',
+        connector: 'Then',
+        before: {
+          src: img('book-before'),
+          alt: 'Parent control setup screen with approval toggles, age rating chips and a passcode note',
+          label: 'Step 1 · Parent',
+          size: [1361, 1058],
+          crop: 0.62,
+          notes: [
+            { x: 46.7, y: 23.5, title: 'Mascot guide', text: 'A friendly character explains the setup.' },
+            { x: 54.7, y: 40.4, title: 'Approval toggles', text: 'Bookings and payments need a parent first.' },
+            { x: 60, y: 68, title: 'Age rating', text: 'Filters which movies the child can see.' },
+          ],
+        },
+        after: {
+          src: img('book-after'),
+          alt: 'Kid-friendly home screen with mascot greeting, reward coins, movie posters and illustrated tab bar',
+          label: 'Step 2 · Kid',
+          size: [1361, 1058],
+          crop: 0.62,
+          notes: [
+            { x: 59, y: 19.4, title: 'Greeting & coins', text: 'Mascot and reward coins make it feel like a game.' },
+            { x: 43.4, y: 58.6, title: 'Poster cards', text: 'Big pictures and stars: choose without reading.' },
+            { x: 53.4, y: 85.5, title: 'Illustrated tabs', text: 'Icons kids recognise at a glance.' },
+          ],
+        },
       },
       { type: 'steps', items: ['Research', 'Information Architecture', 'User Flow', 'Wireframing', 'UI Design & Prototype'] },
       {
@@ -191,8 +268,18 @@ module.exports = [
         type: 'figure',
         src: img('book-design'),
         alt: 'Booking flow screens: movie details, choose cinema, pick time and date, number of seats and seat selection',
-        caption: 'Booking flow: movie → cinema → time & date → number of seats → seat selection.',
         frame: 'accent',
+        screens: {
+          flow: true,
+          pinY: 8,
+          items: [
+            { x: 13.4, title: 'Movie details', text: 'Trailer, rating, genres and cast.', action: 'Book Tickets' },
+            { x: 31.6, title: 'Choose cinema', text: 'Nearby cinemas with distance.', action: 'Select' },
+            { x: 50.3, title: 'Time & date', text: 'Shows grouped by morning, afternoon, evening.', action: 'Pick a time' },
+            { x: 69.1, title: 'How many seats', text: 'Big number picker, two price tiers.', action: 'Select Seats' },
+            { x: 87.8, title: 'Pick seats', text: 'Colour-coded seats and a live total.', action: 'Continue' },
+          ],
+        },
       },
       {
         type: 'text',
@@ -205,8 +292,17 @@ module.exports = [
         type: 'figure',
         src: img('book-screens'),
         alt: 'Parent approval, lock-screen approval notification, scratch card reward, puzzle game and snacks screens',
-        caption: 'Parent approval, approval notification, scratch-card and puzzle rewards, and snacks.',
         frame: 'bleed',
+        screens: {
+          pinY: 5,
+          items: [
+            { x: 19.1, title: 'Parent approval', text: 'Movie, seats and total before paying.', action: 'Approve & Pay' },
+            { x: 34.7, title: 'Approval alert', text: "Parent's phone is notified of the request.", action: 'Tap to review' },
+            { x: 49.7, title: 'Scratch card', text: 'A reward that makes booking fun.', action: 'Scratch' },
+            { x: 65.6, title: 'Puzzle time', text: 'Timed mini puzzle with a progress bar.', action: 'Solve to win' },
+            { x: 80.6, title: 'Grab a bite', text: 'Add snacks; seat and food totals stay visible.', action: '+ / −' },
+          ],
+        },
       },
     ],
   },
@@ -266,15 +362,31 @@ module.exports = [
         type: 'figure',
         src: img('indu-customer'),
         alt: 'Indu Cafe customer home screen with categories, special offer and recommended items',
-        caption: 'Home: search, categories, offers and recommendations.',
         frame: 'accent',
+        size: [1600, 1516],
+        crop: 0.78,
+        notes: [
+          { x: 52, y: 23.4, title: 'Search by dish', text: 'Type "pizza" or "paratha" to jump straight to it.' },
+          { x: 39.2, y: 30.5, title: 'Category row', text: 'One tap filters the menu.' },
+          { x: 41.9, y: 49.1, title: 'Offer banner', text: "Today's deal with a direct Order Now button." },
+          { x: 65, y: 54, side: 'right', title: 'Recommended for you', text: 'Picks based on what the student likes.' },
+          { x: 62.5, y: 70.8, side: 'right', title: 'Add to cart', text: 'Order from the card, no detail page needed.' },
+          { x: 51.6, y: 85.6, side: 'right', title: 'Floating tab bar', text: 'Home, Cart and Profile always in reach.' },
+        ],
       },
       {
         type: 'figure',
         src: img('indu-customer-screens'),
         alt: 'Popular items list, pizza detail with quantity selector, and recommended for you grid',
-        caption: 'Popular items, item detail with quantity, and personalised recommendations.',
         frame: 'accent',
+        screens: {
+          pinY: 5,
+          items: [
+            { x: 22.2, title: 'Popular items', text: 'Best-sellers with price at a glance.', action: 'Add to cart' },
+            { x: 50, title: 'Item detail', text: 'Large photo, price and a quantity stepper.', action: '+ / − then Continue' },
+            { x: 78.1, title: 'Recommended', text: 'A two-column grid of personal picks.', action: 'Add to cart' },
+          ],
+        },
       },
       {
         type: 'text',
@@ -288,8 +400,14 @@ module.exports = [
         type: 'figure',
         src: img('indu-staff'),
         alt: 'Staff dashboard with today overview and quick actions, and online orders list with statuses',
-        caption: 'Staff dashboard and live online orders.',
         frame: 'plain',
+        screens: {
+          pinY: 4,
+          items: [
+            { x: 19.1, y: 9, title: 'Staff dashboard', text: "Today's preparing, on-hold and completed counts, plus four quick actions.", action: 'Tap a quick action' },
+            { x: 67.2, title: 'Online orders', text: 'Order ID, customer, items, time and a status tag: New, Ready or On Hold.', action: 'View All' },
+          ],
+        },
       },
       {
         type: 'text',
@@ -303,8 +421,16 @@ module.exports = [
         type: 'figure',
         src: img('indu-inventory'),
         alt: 'Inventory manager, add stock and add new stock screens',
-        caption: 'Inventory manager, stock updates and new stock entry.',
         frame: 'bleed',
+        screens: {
+          pinY: 5,
+          items: [
+            { x: 16.6, title: 'Inventory manager', text: 'Colour tags flag In Stock, Low and Out of Stock.', action: 'Tap an item' },
+            { x: 39.7, title: 'Update quantity', text: 'Type the amount to add for that ingredient.', action: 'Save' },
+            { x: 62.2, title: 'Check current stock', text: "See what's left before adding more.", action: 'Yes / No' },
+            { x: 84.1, title: 'Add new item', text: 'Name, count and unit for a new ingredient.', action: 'Save' },
+          ],
+        },
       },
       {
         type: 'text',
@@ -464,7 +590,7 @@ module.exports = [
     slug: 'careband',
     name: 'Use Care Band',
     cardTitle: 'Ccare Band Connect',
-    thumb: '/images/thumb-careband.png',
+    thumb: img('care-hero'),
     category: 'Product Design · Wearable',
     summary:
       'A smart wearable safety device designed to support individuals with cognitive and memory-related conditions who may unintentionally wander or get lost.',
@@ -545,7 +671,7 @@ module.exports = [
     slug: 'renue',
     name: 'ReNue',
     cardTitle: 'ReNue',
-    thumb: '/images/thumb-renue.png',
+    thumb: img('renue-logo'),
     category: 'Brand Identity · Campaign',
     summary:
       'A sustainable brand that replaces single-use plastic with seed paper bags that can grow into plants, from identity to awareness campaign.',

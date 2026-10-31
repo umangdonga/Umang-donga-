@@ -75,11 +75,25 @@
         </div>
       </section>
 
+    <% } else if (s.type === 'figure' && s.notes) { %>
+      <section class="cs-section cs-section--tight">
+        <figure class="cs-figure container reveal">
+          <%- include('partials/annotated', { fig: s, start: 0, side: 'left', frameClass: 'anno__frame--' + (s.frame || 'plain') }) %>
+          <% if (s.caption) { %><figcaption><%= s.caption %></figcaption><% } %>
+        </figure>
+      </section>
+
     <% } else if (s.type === 'figure') { %>
       <section class="cs-section cs-section--tight">
         <figure class="cs-figure cs-figure--<%= s.frame || 'plain' %> <%= s.frame === 'bleed' ? '' : 'container' %> reveal">
           <div class="cs-figure__frame">
-            <img src="<%= s.src %>" alt="<%= s.alt %>" loading="lazy">
+            <div class="cs-figure__canvas">
+              <img src="<%= s.src %>" alt="<%= s.alt %>" loading="lazy">
+              <% if (s.screens) { s.screens.items.forEach(function (it, i) { %>
+                <span class="anno__pin cs-strip-pin" style="left: <%= it.x %>%; top: <%= it.y || s.screens.pinY || 6 %>%" aria-hidden="true"><%= it.n || i + 1 %></span>
+              <% }) } %>
+            </div>
+            <% if (s.screens) { %><%- include('partials/screen-strip', { screens: s.screens }) %><% } %>
           </div>
           <% if (s.caption) { %><figcaption class="<%= s.frame === 'bleed' ? 'container' : '' %>"><%= s.caption %></figcaption><% } %>
         </figure>
@@ -87,13 +101,25 @@
 
     <% } else if (s.type === 'beforeAfter') { %>
       <section class="cs-section cs-section--tight">
-        <div class="container cs-ba">
-          <% [s.before, s.after].forEach(function (side, i) { %>
-            <figure class="reveal" style="--d: <%= i * 100 %>ms">
-              <div class="cs-ba__frame"><img src="<%= side.src %>" alt="<%= side.label %> screen" loading="lazy"></div>
-              <figcaption><%= side.label %></figcaption>
+        <div class="container">
+          <% if (s.heading) { %>
+            <div class="cs-text cs-ba__intro reveal">
+              <h2 class="cs-h2"><%= s.heading %></h2>
+              <% if (s.intro) { %><p><%= s.intro %></p><% } %>
+            </div>
+          <% } %>
+          <div class="cs-ba">
+            <figure class="cs-ba__side reveal">
+              <%- include('partials/annotated', { fig: s.before, start: 0, side: 'left', frameClass: 'anno__frame--accent', tag: { label: s.before.label, tone: s.before.tone } }) %>
             </figure>
-          <% }) %>
+            <div class="cs-ba__arrow reveal" style="--d: 80ms" aria-hidden="true">
+              <span><%- icon('arrowRight', 20) %></span>
+              <% if (s.connector) { %><small><%= s.connector %></small><% } %>
+            </div>
+            <figure class="cs-ba__side reveal" style="--d: 160ms">
+              <%- include('partials/annotated', { fig: s.after, start: s.paired ? 0 : (s.before.notes || []).length, side: 'right', frameClass: 'anno__frame--accent', tag: { label: s.after.label, tone: s.after.tone } }) %>
+            </figure>
+          </div>
         </div>
       </section>
 

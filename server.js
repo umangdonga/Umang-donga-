@@ -89,8 +89,11 @@ app.use(express.json({ limit: '20kb' }));
 app.use(express.urlencoded({ extended: false, limit: '20kb' }));
 
 // Shared locals for every view
+// Changes on every deploy/restart so cached CSS and JS are refreshed
+const assetVersion = Date.now().toString(36);
 app.use((req, res, next) => {
   res.locals.site = site;
+  res.locals.assetVersion = assetVersion;
   res.locals.projects = projects;
   res.locals.currentPath = req.path;
   next();
