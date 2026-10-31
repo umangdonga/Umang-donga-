@@ -25,6 +25,321 @@ const img = (name) => `/images/case/${name}.webp`;
 module.exports = [
   /* ------------------------------------------------------------------ */
   {
+    slug: 'findright',
+    name: 'FindRight',
+    cardTitle: 'FindRight',
+    thumb: img('find-hero'),
+    category: 'Web Platform · UX Case Study',
+    summary:
+      'A trust-first freelance platform that matches clients with verified creative freelancers, with clear briefs, open AI-use labels and escrow payments.',
+    theme: {
+      accent: '#6B21D9',
+      accentSoft: '#EFE4FF',
+      onAccent: '#FFFFFF',
+      gradient: 'linear-gradient(135deg,#8A38F5 0%,#3B1578 100%)',
+    },
+    live: 'https://find-right.vercel.app/',
+    hero: {
+      title: 'FindRight',
+      subtitle: 'Hire the right designer, with confidence',
+      image: img('find-hero'),
+      imageStyle: 'wide',
+    },
+    meta: [
+      { label: 'Role', value: 'UI/UX Designer · Brief Strategist', icon: 'user' },
+      { label: 'Type', value: 'Academic Team Project (5 members)', icon: 'layers' },
+      { label: 'Platform', value: 'Web Platform', icon: 'phone' },
+    ],
+    overview: [
+      'FindRight connects clients with creative freelancers by skill, level and availability instead of bidding. Clear briefs, open AI-use labels, capped revisions and escrow payments protect both sides.',
+      'We built it as a team of five. As Brief Strategist, I designed how a vague idea becomes a clear brief, a scope agreement and smooth communication until delivery.',
+    ],
+    sections: [
+      { type: 'steps', items: ['Research', 'Define', 'User Flows', 'Wireframes', 'UI & Live Build'] },
+      {
+        type: 'text',
+        number: '01',
+        heading: 'Problem',
+        paragraphs: [
+          'Freelancers, especially beginners, struggle to find genuine and relevant projects in an overcrowded and increasingly AI-driven freelance market, where limited experience, weak portfolio visibility, and heavy competition make it difficult to get noticed and prove their value. At the same time, clients often struggle to find reliable and available freelancers with the right skills, understand project requirements clearly, and manage communication, timelines, scope, and payments smoothly. Existing platforms and informal channels can create additional challenges such as unclear project briefs, excessive bidding, trust issues, payment insecurity, unlimited revisions, and fragmented communication, making the freelance journey difficult for both freelancers and clients.',
+        ],
+      },
+      {
+        type: 'cards',
+        items: [
+          {
+            icon: 'user',
+            title: 'Freelancers',
+            text: 'Beginners struggle to get noticed, find genuine projects and prove their skills, then face unclear scope and payment risk.',
+          },
+          {
+            icon: 'users',
+            title: 'Clients',
+            text: 'They cannot easily tell who is skilled, available and genuine, or how much of the work is made with AI.',
+          },
+        ],
+      },
+      {
+        type: 'text',
+        number: '02',
+        heading: 'Research',
+        paragraphs: [
+          'We interviewed freelancers and clients and reviewed complaints about existing freelance platforms. Over 100 research points grouped into eight themes.',
+        ],
+      },
+      {
+        type: 'insights',
+        items: [
+          'Clients need someone available now, but posting on WhatsApp or Instagram means waiting for replies.',
+          'New designers have no reviews or real projects to show, so trust is hard to earn.',
+          'Vague briefs, unlimited revisions and payment worries hurt both sides.',
+        ],
+      },
+      {
+        type: 'figure',
+        src: img('find-affinity'),
+        alt: 'Affinity map with research points grouped into eight themes, from finding opportunities to quality and fairness',
+        frame: 'plain',
+      },
+      {
+        type: 'text',
+        number: '03',
+        heading: 'User personas',
+        paragraphs: ['Every hire has two sides, so we designed for both.'],
+      },
+      {
+        type: 'figure',
+        src: img('find-persona-freelancer'),
+        alt: 'Persona for Varun Sharma, a 24-year-old freelance creative designer in Ahmedabad',
+        caption: 'Varun Sharma, 24, freelancer: wants steady, genuine projects and fair pay.',
+        frame: 'plain',
+      },
+      {
+        type: 'figure',
+        src: img('find-persona-client'),
+        alt: 'Persona for Rahul Shah, a 31-year-old business owner in Ahmedabad',
+        caption: 'Rahul Shah, 31, business owner: wants the right person quickly, without chasing.',
+        frame: 'plain',
+      },
+      {
+        type: 'text',
+        number: '04',
+        heading: 'Overall flow',
+        paragraphs: ['Clients and freelancers enter separately, then meet on one shared path from match to completion.'],
+      },
+      {
+        type: 'figure',
+        src: img('find-flow'),
+        alt: 'User flow from landing page to client and freelancer paths, then discover and match, connect, hire and payment, project execution and completion',
+        frame: 'plain',
+      },
+      {
+        type: 'cards',
+        heading: 'My focus: why briefs fail today',
+        items: [
+          { icon: 'file', title: 'Vague briefs', text: 'Scattered WhatsApp and call details mean designers end up redoing work.' },
+          { icon: 'pen', title: 'Scope creep', text: 'Changes not discussed at the start and unlimited revisions lead to unpaid time.' },
+          { icon: 'target', title: 'Deadline pressure', text: 'Clients ask "is it done?" before the deadline, which breaks the workflow.' },
+        ],
+      },
+      {
+        type: 'text',
+        number: '05',
+        heading: 'Post a job',
+        paragraphs: ['Four short steps replace a long form, so every project starts with the same clear information.'],
+      },
+      {
+        type: 'figure',
+        src: img('find-post-flow'),
+        alt: 'Post a job steps on the live site: job details, budget and limits, and preview',
+        frame: 'accent',
+        screens: {
+          flow: true,
+          pinY: 3,
+          items: [
+            { x: 17.8, title: 'Job details', text: 'Category, job type and experience level.', action: 'Continue' },
+            { x: 50, title: 'Budget & limits', text: 'Budget, deadline, revisions, milestones and AI preference.', action: 'Continue' },
+            { x: 82.3, title: 'Preview', text: 'A final check of the whole brief.', action: 'Post job' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-ai-brief'),
+        alt: 'Step two of post a job: a plain description rewritten by AI into an editable structured brief',
+        caption: 'The description step: AI turns plain words into a structured brief the client still controls.',
+        frame: 'plain',
+        size: [1300, 1743],
+        notes: [
+          { x: 5, y: 28, title: 'Own words', text: 'Clients write freely, with no design terms needed.' },
+          { x: 24, y: 42, title: 'Rewrite with AI', text: 'One tap turns it into a clear brief.' },
+          { x: 93, y: 48, side: 'right', title: 'Always editable', text: 'AI drafts, the client decides.' },
+          { x: 93, y: 64, side: 'right', title: 'Clear deliverables', text: 'One per line, so scope is easy to check.' },
+          { x: 93, y: 87, side: 'right', title: 'Ideal candidate', text: 'Sets expectations for who should apply.' },
+        ],
+      },
+      {
+        type: 'text',
+        number: '06',
+        heading: 'Agreement, chat & tracking',
+        paragraphs: ['After the brief, one workspace keeps the scope, the conversation and the progress together.'],
+      },
+      {
+        type: 'figure',
+        src: img('find-agreement'),
+        alt: 'FindRight project agreement listing scope, sessions, revisions, payment, AI usage and ownership',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 18, y: 49, title: 'Written scope', text: 'Built from what both sides agreed in chat.' },
+            { x: 50, y: 71, title: 'Capped revisions', text: 'The limit and the extra-round rate are set up front.' },
+            { x: 84, y: 59, title: 'Clear total', text: 'The contract value before anything is paid.', action: 'Continue to payment' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-chat'),
+        alt: 'Chat workspace with messages, contract events, a scheduled meeting and project details',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 17.5, y: 18, title: 'One thread per project', text: 'No more details lost across apps.' },
+            { x: 53, y: 23, title: 'Events in the chat', text: 'Contract and delivery updates appear in the conversation.' },
+            { x: 88, y: 22, title: 'Project at a glance', text: 'Status, next meeting and files stay beside the chat.', action: 'Join video call' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-tracker'),
+        alt: 'Project page with a stage tracker, milestones and payments, and a payment summary',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 16, y: 58, title: 'Milestones', text: 'Each stage shows its status, plus revisions used.' },
+            { x: 44.5, y: 31, title: 'Stage tracker', text: 'Clients see progress without asking "is it done?".' },
+            { x: 82, y: 63, title: 'Payment summary', text: 'Paid, held in escrow and total in one place.' },
+          ],
+        },
+      },
+      {
+        type: 'text',
+        number: '07',
+        heading: 'Finding the right match',
+        paragraphs: ['Built with the team, these client screens answer the three questions from research: who fits, who is free and who can be trusted.'],
+      },
+      {
+        type: 'figure',
+        src: img('find-home'),
+        alt: 'Client dashboard with welcome banner, jobs and escrow totals, tasks needing attention and recommended talent',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 15, y: 26, title: 'Start fast', text: 'Post a job or find talent from the first screen.', action: 'Post a job' },
+            { x: 44, y: 54.5, title: 'Needs your attention', text: 'Deliveries and proposals waiting on the client.' },
+            { x: 85, y: 20, title: 'Starter credits', text: 'New clients get three discounted hires.' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-find'),
+        alt: 'Find freelancers page with category filters and designer cards showing rating, availability, AI label and work samples',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 22, y: 30, title: 'Filter by craft', text: 'Search by category, experience level and AI usage.' },
+            { x: 44, y: 66.7, title: 'AI label', text: 'AI use is visible before opening a profile.' },
+            { x: 83, y: 60, title: 'Live availability', text: 'Clients see who is free before they reach out.', action: 'View profile' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-proposals'),
+        alt: 'Client job page with the brief, proposals sorted by best match and matched freelancers to invite',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 26, y: 38, title: 'The brief', text: 'Budget, deadline, revisions and milestones stay visible.' },
+            { x: 47, y: 70, title: 'Best match first', text: 'Proposals rank by fit, with a match score.' },
+            { x: 84, y: 42, title: 'Invite matches', text: 'Suggested freelancers can be invited directly.', action: 'Invite' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-profile'),
+        alt: 'Freelancer profile as seen by a client, with verification badges, stats, AI usage disclosure and an invitation panel',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 33, y: 26.5, title: 'Verified badges', text: 'ID, availability and AI level beside the name.' },
+            { x: 64, y: 71, title: 'AI disclosure', text: "AI use shown per discipline, in the freelancer's words." },
+            { x: 83, y: 80, title: 'Direct invite', text: 'Message or invite without leaving the profile.' },
+          ],
+        },
+      },
+      {
+        type: 'text',
+        number: '08',
+        heading: 'The freelancer side',
+        paragraphs: ['No bidding. Freelancers see genuine, relevant briefs and earn visibility through verifiable work.'],
+      },
+      {
+        type: 'figure',
+        src: img('find-jobs'),
+        alt: 'Find genuine projects page with filters and project cards showing match score, budget and verified client',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 13, y: 29, title: 'Focused filters', text: 'Skill, budget, deadline and client type.' },
+            { x: 36, y: 64, title: 'Verified clients', text: 'Every brief shows who is behind it.' },
+            { x: 58, y: 34, title: 'Match score', text: 'Ranked by fit, not by who bids lowest.', action: 'View brief' },
+          ],
+        },
+      },
+      {
+        type: 'figure',
+        src: img('find-trust'),
+        alt: 'Trust and progression page showing six trust steps complete, from identity verification to a first client review',
+        frame: 'accent',
+        screens: {
+          items: [
+            { x: 14, y: 51, title: 'Trust steps', text: 'Verified identity, portfolio, disclosure and reviews.' },
+            { x: 88, y: 33.7, title: 'Trust score', text: 'Progress raises ranking in client searches, with no paid boosts.' },
+          ],
+        },
+      },
+      {
+        type: 'identity',
+        number: '09',
+        heading: 'Brand & components',
+        intro: 'The mark joins a search lens with a check: the right match, verified. One typeface and one purple keep every screen calm.',
+        colors: ['#8A38F5', '#6B21D9', '#160F24'],
+        typeface: 'Poppins',
+        image: { src: img('find-logo'), alt: 'FindRight logo construction and variations' },
+      },
+      {
+        type: 'figure',
+        src: img('find-cards'),
+        alt: 'Component library with cards and content blocks',
+        frame: 'plain',
+      },
+      {
+        type: 'text',
+        heading: 'Learnings',
+        paragraphs: [
+          'A clear brief is a trust feature, not just a form. Making scope, revisions and progress visible early removes most of the friction that appears later.',
+          'Working in five connected roles taught me to design inside a shared system, keep AI in a helping role, and test ideas in a real, working build.',
+        ],
+      },
+    ],
+  },
+
+  /* ------------------------------------------------------------------ */
+  {
     slug: 'campus',
     name: 'Campus Connect',
     cardTitle: 'Campus Connect',

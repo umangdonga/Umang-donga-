@@ -263,6 +263,9 @@
   <section class="cs-section">
     <div class="container">
       <div class="cs-end reveal">
+        <% if (project.live) { %>
+          <a href="<%= project.live %>" class="btn btn--dark" target="_blank" rel="noopener">View live site <%- icon('arrow', 15) %></a>
+        <% } %>
         <% if (project.behance) { %>
           <a href="<%= project.behance %>" class="btn btn--dark" target="_blank" rel="noopener">View on Behance <%- icon('arrow', 15) %></a>
         <% } %>

@@ -564,7 +564,7 @@ p { margin: 0; }
 
 .cs-cards { display: grid; gap: 20px; }
 .cs-cards--2 { grid-template-columns: repeat(2, 1fr); }
-.cs-cards--3 { grid-template-columns: repeat(3, 1fr); }
+.cs-cards--3, .cs-cards--6 { grid-template-columns: repeat(3, 1fr); }
 .cs-card { padding: 28px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); transition: transform .35s var(--ease), box-shadow .35s; }
 .cs-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .cs-card__icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--cs-accent-soft); color: var(--cs-accent); margin-bottom: 18px; }
@@ -672,7 +672,7 @@ p { margin: 0; }
   .hero__glass { right: 16px; left: 16px; bottom: 16px; width: auto; max-width: none; }
 
   .process__grid, .services__grid, .contact__grid, .about-hero__grid, .approach__grid, .tools__grid,
-  .cta-panel, .cs-hero__grid, .cs-overview, .cs-ideas, .cs-ba, .cs-cards--2, .cs-cards--3, .cs-insights, .footer__top {
+  .cta-panel, .cs-hero__grid, .cs-overview, .cs-ideas, .cs-ba, .cs-cards--2, .cs-cards--3, .cs-cards--6, .cs-insights, .footer__top {
     grid-template-columns: 1fr;
   }
   .process__intro { position: static; }

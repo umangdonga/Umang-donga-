@@ -18,7 +18,7 @@ npm run dev      # auto-restart on file changes
 | `/about` | About: approach, principles, tools |
 | `/projects` | All projects |
 | `/contact` | Contact form |
-| `/campus`, `/book`, `/indu-cafe`, `/ux-laws`, `/careband`, `/renue` | Case studies |
+| `/findright`, `/campus`, `/book`, `/indu-cafe`, `/ux-laws`, `/careband`, `/renue` | Case studies |
 
 ## Editing content
 
