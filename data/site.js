@@ -20,6 +20,18 @@ module.exports = {
     { label: 'Contact', url: '/contact' },
   ],
 
+  skills: [
+    'User Research',
+    'User Journey Mapping',
+    'Information Architecture',
+    'User Flow',
+    'Wireframing',
+    'UI Design',
+    'UX Design',
+    'Prototyping',
+    'Problem Solving',
+  ],
+
   process: [
     {
       icon: 'users',
@@ -84,6 +96,12 @@ module.exports = {
     { icon: 'pen', title: 'Purposeful design', text: 'Every screen, interaction, and visual choice should have a clear purpose.' },
     { icon: 'layers', title: 'Keep it simple', text: 'I believe good design should be clear, intuitive, and easy to understand.' },
     { icon: 'target', title: 'Always learning', text: 'I continuously explore new ideas, tools, and design approaches to improve my work.' },
+  ],
+
+  certificates: [
+    { title: 'Foundations of User Experience (UX) Design', issuer: 'Google', date: 'Sep 2026', url: 'https://coursera.org/verify/P8W73ZVAB5GK' },
+    { title: 'Introduction to UX/UI Design', issuer: 'IBM', date: 'Sep 2026', url: 'https://coursera.org/verify/ZDL6SD2L2246' },
+    { title: 'Generative AI: Prompt Engineering Basics', issuer: 'IBM', date: 'Aug 2026', url: 'https://coursera.org/verify/871IFI00NBIM' },
   ],
 
   tools: [

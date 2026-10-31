@@ -8,7 +8,7 @@
   <meta property="og:title" content="<%= title %>">
   <meta property="og:description" content="<%= typeof description !== 'undefined' ? description : site.description %>">
   <meta property="og:image" content="/images/portrait.png">
-  <link rel="icon" href="/images/avatar.png">
+  <link rel="icon" type="image/png" href="/images/favicon.png?v=<%= assetVersion %>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
   <header class="nav" data-nav>
     <div class="container nav__inner">
       <a href="/" class="nav__brand" aria-label="<%= site.name %> — home">
-        <img src="/images/avatar.png" alt="" width="22" height="27">
+        <img src="/images/logo.png?v=<%= assetVersion %>" alt="" width="47" height="28">
         <span><%= site.name %></span>
       </a>
       <nav class="nav__links" aria-label="Primary">

@@ -84,6 +84,26 @@
   </div>
 </section>
 
+<section class="certs" aria-labelledby="certs-title">
+  <div class="container">
+    <h2 id="certs-title" class="certs__title reveal">Certificates</h2>
+    <ul class="certs__list">
+      <% site.certificates.forEach(function (c, i) { %>
+        <li class="reveal" style="--d: <%= i * 80 %>ms">
+          <a href="<%= c.url %>" class="cert" target="_blank" rel="noopener" aria-label="Verify <%= c.title %> certificate on Coursera">
+            <span class="cert__icon"><%- include('partials/icon', { name: 'award', size: 18 }) %></span>
+            <span class="cert__body">
+              <strong><%= c.title %></strong>
+              <small><%= c.issuer %> · Coursera · <%= c.date %></small>
+            </span>
+            <%- include('partials/icon', { name: 'arrow', size: 15 }) %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
     <div class="cta-panel reveal">
@@ -99,7 +119,7 @@
         <ul>
           <li>
             <span class="contact-card__icon"><%- include('partials/icon', { name: 'mail' }) %></span>
-            <div><small>Email</small><span><%= site.email %></span></div>
+            <div><small>Email</small><span><%- site.email.replace('@', '<wbr>@') %></span></div>
           </li>
           <li>
             <span class="contact-card__icon"><%- include('partials/icon', { name: 'pin' }) %></span>

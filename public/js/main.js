@@ -75,6 +75,8 @@
       }
       anno.classList.add('is-placed');
       var box = anno.getBoundingClientRect();
+      // Page zoom on large screens: rects are scaled, offsets and style values are not
+      var scale = box.width / anno.offsetWidth || 1;
       svg.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
 
       anno.querySelectorAll('.anno__notes').forEach(function (col) {
@@ -86,7 +88,7 @@
           var pin = anno.querySelector('[data-pin="' + note.dataset.note + '"]');
           var p = pin.getBoundingClientRect();
           var anchor = num.offsetTop + num.offsetHeight / 2;
-          return { note: note, num: num, pin: p, h: note.offsetHeight, top: p.top + p.height / 2 - colTop - anchor };
+          return { note: note, num: num, pin: p, h: note.offsetHeight, top: (p.top + p.height / 2 - colTop) / scale - anchor };
         }).sort(function (a, b) { return a.top - b.top; });
 
         // Keep callouts in pin order without overlapping or leaving the column
